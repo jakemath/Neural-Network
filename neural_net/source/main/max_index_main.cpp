@@ -6,8 +6,8 @@
 //  Copyright © 2019 Jacob Mathai. All rights reserved.
 //
 
-#include "/Users/Jacob/Desktop/Programming/C++/neural_net/neural_net/source/neural_network.h"
-#include "/Users/Jacob/Desktop/Programming/C++/neural_net/neural_net/source/dataset_utils.h"
+#include "<YOUR PATH>/neural_net/source/neural_network.h"
+#include "<YOUR PATH>/neural_net/source/dataset_utils.h"
 
 int main()
 {
