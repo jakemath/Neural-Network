@@ -6,13 +6,13 @@
 //  Copyright © 2019 Jacob Mathai. All rights reserved.
 //
 
-#include "/Users/Jacob/Desktop/Programming/C++/neural_net/neural_net/source/neural_network.h"
-#include "/Users/Jacob/Desktop/Programming/C++/neural_net/neural_net/source/dataset_utils.h"
+#include "<YOUR PATH>/neural_net/source/neural_network.h"
+#include "<YOUR PATH>/neural_net/neural_net/source/dataset_utils.h"
 
 int main()
 {
-    std::ifstream train("<PATH>/data/test_bank.txt"),
-                  test("<PATH>/data/train_bank.txt");
+    std::ifstream train("<YOUR PATH>/data/test_bank.txt"),
+                  test("<YOUR PATH>/data/train_bank.txt");
     cout << "Loading csvs..." << endl;
     list<vector<double>> trainframe, testframe;
     list<vector<double>>::iterator i;
