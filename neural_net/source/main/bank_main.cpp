@@ -11,9 +11,8 @@
 
 int main()
 {
-//    list<Point> dataset = generate_dataset(50000, x_shape, y_shape, "max_index");
-    std::ifstream train("/Users/Jacob/desktop/programming/c++/neural_net/neural_net/data/test_bank.txt"),
-                  test("/Users/Jacob/desktop/programming/c++/neural_net/neural_net/data/train_bank.txt");
+    std::ifstream train("<PATH>/data/test_bank.txt"),
+                  test("<PATH>/data/train_bank.txt");
     cout << "Loading csvs..." << endl;
     list<vector<double>> trainframe, testframe;
     list<vector<double>>::iterator i;
