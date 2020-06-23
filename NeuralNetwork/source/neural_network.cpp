@@ -90,7 +90,7 @@ bool NeuralNetwork::train(list<Point>& dataset,
                           bool normalize_lr)
 {
     list<Point>::iterator datapoint = dataset.begin();
-    assert(datapoint -> x.size() == layers[0].size());
+    assert(datapoint->x.size() == layers[0].size());
     unsigned i = 1, iter = 0;
     double total_cost = 0.0, cost = 0, average_cost = 1;
     std::ofstream out("/Users/Jacob/Desktop/Programming/C++/neural_net/neural_net/costs/bank_cost.txt");
@@ -168,22 +168,22 @@ vector<double> NeuralNetwork::forward_propagate(Point& datapoint, string transfe
     }
     for (vector<Layer>::iterator layer = layers.begin(); layer != layers.end() - 1; ++layer)
     {
-        new_inputs = vector<double>((layer + 1) -> size());
-        weights = vector<double>(layer -> size());
-        for (weight = 0; weight < (layer + 1) -> size(); ++weight)
+        new_inputs = vector<double>((layer + 1)->size());
+        weights = vector<double>(layer->size());
+        for (weight = 0; weight < (layer + 1)->size(); ++weight)
         {
-            for (neuron = 0; neuron < layer -> neurons.size(); ++neuron)
-                weights[neuron] = layer -> neurons[neuron].weights_to_next_layer[weight];
-            activated_value = std::inner_product(weights.begin(), weights.end(), inputs.begin(), (layer + 1) -> bias);
+            for (neuron = 0; neuron < layer->neurons.size(); ++neuron)
+                weights[neuron] = layer->neurons[neuron].weights_to_next_layer[weight];
+            activated_value = std::inner_product(weights.begin(), weights.end(), inputs.begin(), (layer + 1)->bias);
             transfer_value = transfer_fn(activated_value);
             if (transfer_function != "none"
                 && transfer_function != "tanh_regression"
                 && transfer_function != "sigmoid_regression"
                 && transfer_function != "relu_regression")
-                (layer + 1) -> neurons[weight].activated_value = activated_value;
+                (layer + 1)->neurons[weight].activated_value = activated_value;
             else
-                (layer + 1) -> neurons[weight].activated_value = transfer_value;
-            (layer + 1) -> neurons[weight].transfer_value = transfer_value;
+                (layer + 1)->neurons[weight].activated_value = transfer_value;
+            (layer + 1)->neurons[weight].transfer_value = transfer_value;
             new_inputs[weight] = transfer_value;
         }
         inputs = new_inputs;
@@ -233,15 +233,15 @@ double NeuralNetwork::backpropagate(Point& datapoint, string transfer_function)
     double cost = std::accumulate(errors.begin(), errors.end(), 0.0);
     for (vector<Layer>::reverse_iterator layer = layers.rbegin(); layer != layers.rend() - 1; ++layer)
     {
-        new_errors = vector<double>((layer + 1) -> size());
-        for (neuron = 0; neuron < (layer + 1) -> size(); ++neuron)
+        new_errors = vector<double>((layer + 1)->size());
+        for (neuron = 0; neuron < (layer + 1)->size(); ++neuron)
         {
             weighted_error = std::inner_product(errors.begin(),
                                                 errors.end(),
-                                                (layer + 1) -> neurons[neuron].weights_to_next_layer.begin(),
+                                                (layer + 1)->neurons[neuron].weights_to_next_layer.begin(),
                                                 0.0);
-            error = weighted_error * transfer_fn((layer + 1) -> neurons[neuron].transfer_value);
-            (layer + 1) -> neurons[neuron].error = error;
+            error = weighted_error * transfer_fn((layer + 1)->neurons[neuron].transfer_value);
+            (layer + 1)->neurons[neuron].error = error;
             new_errors[neuron] = error;
         }
         errors = new_errors;
@@ -260,15 +260,15 @@ void NeuralNetwork::update_weights(Point& datapoint, double lr, bool normalize_l
     vector<double> inputs(datapoint.x);
     for (vector<Layer>::iterator layer = layers.begin(); layer != layers.end() - 1; ++layer)
     {
-        for (weight = 0; weight < (layer + 1) -> size(); ++weight)
+        for (weight = 0; weight < (layer + 1)->size(); ++weight)
         {
-            neuron_error = (layer + 1) -> neurons[weight].error;
-            for (neuron = 0; neuron < layer -> size(); ++neuron)
-                layer -> neurons[neuron].weights_to_next_layer[weight] += rate * neuron_error * inputs[neuron];
+            neuron_error = (layer + 1)->neurons[weight].error;
+            for (neuron = 0; neuron < layer->size(); ++neuron)
+                layer->neurons[neuron].weights_to_next_layer[weight] += rate * neuron_error * inputs[neuron];
         }
-        inputs = vector<double>((layer + 1) -> size());
-        for (neuron = 0; neuron < (layer + 1) -> size(); ++neuron)
-            inputs[neuron] = (layer + 1) -> neurons[neuron].transfer_value;
+        inputs = vector<double>((layer + 1)->size());
+        for (neuron = 0; neuron < (layer + 1)->size(); ++neuron)
+            inputs[neuron] = (layer + 1)->neurons[neuron].transfer_value;
     }
 }
 
@@ -308,12 +308,12 @@ double NeuralNetwork::predict(list<Point>& dataset, string transfer_function)
     for (list<Point>::iterator datapoint = dataset.begin(); datapoint != dataset.end(); ++datapoint, ++i)
     {
         cout << "ITERATION: " << i << ", ";
-        cout << "Y = " << datapoint -> y << ", ";
+        cout << "Y = " << datapoint->y << ", ";
         prediction = forward_propagate(*datapoint, transfer_function);
         for (neuron = 0; neuron < layers.back().size(); ++neuron)
         {
             total_cost += layers.back().neurons[neuron].error;
-            diff[neuron] = prediction[neuron] - datapoint -> y[neuron];
+            diff[neuron] = prediction[neuron] - datapoint->y[neuron];
         }
         cout << "Z = " << prediction;
         if (transfer_function != "none"
@@ -331,7 +331,7 @@ double NeuralNetwork::predict(list<Point>& dataset, string transfer_function)
             && transfer_function != "sigmoid_regression"
             && transfer_function != "relu_regression")
         {
-            total_correct += (prediction == datapoint -> y);
+            total_correct += (prediction == datapoint->y);
             for (unsigned short int i = 0; i < layers.back().size(); ++i)
             {
                 if (class_counts.find(prediction[i]) != class_counts.end())
@@ -341,7 +341,7 @@ double NeuralNetwork::predict(list<Point>& dataset, string transfer_function)
             }
         }
         else
-            total_correct += abs(prediction[0] - datapoint -> y[0]) <= .01;
+            total_correct += abs(prediction[0] - datapoint->y[0]) <= .01;
     }
     cout << "TOTAL CORRECT: " << total_correct << ", " << 100.0*total_correct/dataset.size() << "%" << endl;
     if (transfer_function != "none"
@@ -351,7 +351,7 @@ double NeuralNetwork::predict(list<Point>& dataset, string transfer_function)
     {
         cout << "PREDICTION COUNTS: " << endl;
         for (map<int, int>::iterator m = class_counts.begin(); m != class_counts.end(); ++m)
-            cout << m -> first << ": " << m -> second << endl;
+            cout << m->first << ": " << m->second << endl;
 //        for (unsigned short int i = 1; i <= layers.back().size(); ++i)
 //            cout << "\t Type " << i << ": " << class_counts[i - 1] << endl;
     }
