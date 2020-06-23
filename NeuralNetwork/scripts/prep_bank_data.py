@@ -1,9 +1,7 @@
-#!/usr/bin/env python
-
-import pandas as pd
+#! Python
 import numpy as np
-from sklearn.model_selection import train_test_split # Split data
-
+import pandas as pd
+from sklearn.model_selection import train_test_split
 
 print('Cleaning dataset...')
 bank = pd.read_csv('/NeuralNetwork/NeuralNetwork/data/banking.csv')
@@ -30,6 +28,6 @@ for col in float_cols:
     bank[col] = (bank[col] - bank[col].mean())/bank[col].std()
 print(bank.head())
 train, test = train_test_split(bank, test_size=0.3)  # Split data, 30% for testing
-train.to_csv('/NeuralNetwork/NeuralNetwork/data/train_bank.txt', header=None, index=False)
-test.to_csv('/NeuralNetwork/NeuralNetwork/data/test_bank.txt', header=None, index=False)
+train.to_csv('../data/train_bank.txt', header=None, index=False)
+test.to_csv('../data/test_bank.txt', header=None, index=False)
 
