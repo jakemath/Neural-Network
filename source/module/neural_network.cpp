@@ -16,11 +16,8 @@ NeuralNetwork::NeuralNetwork(vector<unsigned short int>& layer_sizes,
                              double weights_std) {
     unsigned layer;
     assert(layer_sizes.size() - 1 == biases.size());
-    for (layer = 0; layer < layer_sizes.size(); ++layer) {
-        if (layer_sizes[layer] <= 0)
-            cout << layer_sizes[layer] << endl;
-        assert(layer_sizes[layer] > 0);
-    }
+    for (const auto layer_ : layer_sizes)
+        assert(layer_size > 0);
     layers = vector<Layer>(layer_sizes.size());
     for (layer = 0; layer < layer_sizes.size() - 1; ++layer)
         layers[layer] = Layer(
@@ -213,7 +210,7 @@ void NeuralNetwork::update_weights(Point& datapoint, double lr, bool normalize_l
         for (weight = 0; weight < (layer + 1)->size(); ++weight) {
             neuron_error = (layer + 1)->neurons[weight].error;
             for (neuron = 0; neuron < layer->size(); ++neuron)
-                layer->neurons[neuron].weights_to_next_layer[weight] += rate * neuron_error * inputs[neuron];
+                layer->neurons[neuron].weights_to_next_layer[weight] += rate*neuron_error*inputs[neuron];
         }
         inputs = vector<double>((layer + 1)->size());
         for (neuron = 0; neuron < (layer + 1)->size(); ++neuron)
@@ -268,8 +265,8 @@ double NeuralNetwork::predict(list<Point>& dataset, string transfer_function) {
             && transfer_function != "sigmoid_regression"
             && transfer_function != "relu_regression") {
         cout << "PREDICTION COUNTS: " << endl;
-        for (map<int, int>::iterator m = class_counts.begin(); m != class_counts.end(); ++m)
-            cout << m->first << ": " << m->second << endl;
+        for (const auto& m : class_counts)
+            cout << m.first << ": " << m.second << endl;
     }
     return 1.0*total_cost / dataset.size();
 }
