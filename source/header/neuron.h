@@ -30,7 +30,11 @@ using std::string;
 using std::vector;
 
 struct Neuron {
-    Neuron(): activated_value(0.0), transfer_value(0.0), weights_to_next_layer(vector<double>()), error(0.0) {}
+    Neuron(): 
+        activated_value(0.0), 
+        transfer_value(0.0), 
+        weights_to_next_layer(vector<double>()), 
+        error(0.0) {}
     double activated_value;
     double transfer_value;
     double error;
