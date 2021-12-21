@@ -16,8 +16,8 @@ NeuralNetwork::NeuralNetwork(vector<unsigned short int>& layer_sizes,
                              double weights_std) {
     unsigned layer;
     assert(layer_sizes.size() - 1 == biases.size());
-    for (const auto layer_ : layer_sizes)
-        assert(layer_size > 0);
+    for (const auto& layer_ : layer_sizes)
+        assert(layer_ > 0);
     layers = vector<Layer>(layer_sizes.size());
     for (layer = 0; layer < layer_sizes.size() - 1; ++layer)
         layers[layer] = Layer(
@@ -99,7 +99,6 @@ bool NeuralNetwork::train(list<Point>& dataset,
     cout << *this << std::flush;
     if (!isnan(cost)) {
         cout << "WEIGHTS TRAINED - MAKE PREDICTIONS" << endl;
-        system("sleep 5");
         return true;
     }
     return false;

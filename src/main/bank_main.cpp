@@ -37,10 +37,9 @@ int main() {
     vector<unsigned short int> layer_sizes = {x_shape, y_shape};
     vector<double> biases(layer_sizes.size() - 1, 0.0);
     cout << "Initializing network..." << endl;
-    string activation_function = "tanh";
-    NeuralNetwork net(layer_sizes, true, biases, 0.0, .1);
+    NeuralNetwork net(layer_sizes, true, biases, 0.0, .25);
     cout << net;
-    bool trained = net.train(train_set, activation_function, .001, "none", false);
+    bool trained = net.train(train_set, "sigmoid", .0000001, "none", false);
     if (trained) {
         cout << "Testing..." << endl;
         double avg_cost = net.predict(test_set, activation_function);

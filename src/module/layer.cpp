@@ -23,14 +23,14 @@ Layer::Layer(unsigned short int neurons_,
             unsigned long int seed = std::chrono::system_clock::now().time_since_epoch().count();
             std::default_random_engine generator(seed);
             std::normal_distribution<double> norm(weights_mean, weights_std);
-            for (const auto& neuron : nerons) { // Randomize weights from nodes to next layer
+            for (auto& neuron : neurons) { // Randomize weights from nodes to next layer
                 neuron.weights_to_next_layer = vector<double>(neurons_in_next_layer);
                 for (const auto& weight : neuron.weights_to_next_layer)
-                    neurons[neuron].weights_to_next_layer[weight] = norm(generator);
+                    neuron.weights_to_next_layer[weight] = norm(generator);
             }
         }
         else {
-            for (const auto& neuron : nerons) // Randomize weights from nodes to next layer
+            for (auto& neuron : neurons) // Randomize weights from nodes to next layer
                 neuron.weights_to_next_layer = vector<double>(neurons_in_next_layer, 0.0);
         }
     }
